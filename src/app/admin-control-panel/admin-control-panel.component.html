@@ -1,0 +1,55 @@
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">UserId</th>
+                <th scope="col">UserName</th>
+                <th scope="col">UserRole</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor=" let user of Users" scope="row">
+                <td width="20%" >{{user.userId}}</td>
+                <td width="20%" >{{user.userName}}</td>
+                <td width="20%">
+                    {{user.role}}
+                </td >
+                <td width="30%">
+                    <div class="action">
+                      <span><button type="button" class="btn btn-success" (click)="deleteUser(user)"><i class='bx bxs-trash'></i></button> </span>  
+                        <span><button type="button" class="btn btn-warning"  (click)="updateRoleData(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class='bx bx-edit' ></i></button></span>
+                        
+                    </div>
+                  
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ newRole }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li *ngFor=" let role of Roles"  class="dropdown-item" aria-current="true" (click)="setRole(role.role)" >{{ role.role}}</li>
+                 
+                </ul>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="updateRole()">Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
