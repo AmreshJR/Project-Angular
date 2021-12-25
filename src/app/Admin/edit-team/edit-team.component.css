@@ -1,0 +1,14 @@
+.card{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    align-items: center;
+}
+
+.dm-1{
+    width: 300px;
+}
+.dt-1{
+    width: 300px;
+}

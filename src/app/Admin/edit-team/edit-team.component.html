@@ -1,0 +1,31 @@
+<div class="card border-dark mb-3" style="max-width: 330px;">
+    <div class="card-header">Header</div>
+    <div class="card-body text-dark">
+        <h5 class="card-title">Dark card title</h5>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle dt-1" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                {{current}}
+            </button>
+            <ul class="dropdown-menu dm-1" aria-labelledby="dropdownMenuButton1">
+                <li class="dropdown-item" *ngFor=" let lead of teamLeads" aria-current="true"
+                    (click)="setTeamLead(lead)">{{lead.userName}}</li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="card-body text-dark">
+        <h5 class="card-title">Select the Employee</h5>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                {{selectedEmployee}}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                <li class="dropdown-item" *ngFor=" let emp of inactive" aria-current="true" (click)="setEmployee(emp)">
+                    {{emp.userName}}-{{emp.role}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

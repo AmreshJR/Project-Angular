@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { DtoLogIn } from './DtoLogIn';
 
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
    public status!:boolean;
   LoginForm : FormGroup =new FormGroup({});
-  constructor(private fb : FormBuilder,private router:  Router, private authService: AuthenticationService) { }
+  constructor(private fb : FormBuilder,private jwtHelper :JwtHelperService,private router:  Router, private authService: AuthenticationService) { }
   public enc!: string;
   public dc!:string;
   ngOnInit(): void {
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
     // this.router.navigate(['/userDetails']);
     this.enc = this.authService.encryptData("#TESTtest1")
     console.log(this.enc);
-    this.dc = this.authService.decryptData("mRx1ugsvwnz1pkD15X9tjxayr6WhlKrMqv9QpMglrzpZd3cdzTH+mEX2DR6CvbEf");
+    this.dc = this.authService.decryptData(this.enc);
     console.log(this.dc);
     this.LoginForm = this.fb.group({
       Email : ['',[Validators.required,Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
@@ -41,20 +42,29 @@ signUpRedirect(){
 onSubmit(){
   
   var user: DtoLogIn = {
-    userEmail: this.LoginForm.value.Email,
-    userPassword: this.LoginForm.value.Password
+    email: this.LoginForm.value.Email,
+    password: this.LoginForm.value.Password
   }
 
-  // this.authService.loginUser(user).subscribe
-  // (data=>{
-  //   console.log(data);
-  //   const token = data.token;
-  //   localStorage.setItem("jwt",token);
-  //   this.router.navigate(['/userDetails']);
-  //   this.status = false;
-  // },err=>{
-  //   this.status = true;
-  // });
+  this.authService.logIn(user).subscribe
+  (data=>{
+    const token:string = data.result.token;
+    const tokenExp = data.result.tokenExp
+    localStorage.setItem("jwt",token);
+    localStorage.setItem("tokeExpiration",tokenExp)
+    const parseJwt = JSON.parse(atob(token.split('.')[1]));
+    const userData =this.authService.encryptData(JSON.stringify({ 
+      isAdmin: 'Manager' === parseJwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+      id: parseJwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/userdata"],
+      role: parseJwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]
+      }));
+      localStorage.setItem('currentUser',userData);
+      this.authService.UserObject();
+    // this.router.navigate(['/userDetails']);
+    this.status = false;
+  },err=>{
+    this.status = true;
+  });
  
 }
 

@@ -1,0 +1,47 @@
+p{
+    margin-top: 5%;
+}
+.dt{
+    width: 100%;
+}
+.dm{
+    width: 100%;
+}
+.cf{
+    width: 300px;
+    text-align: center;
+    margin-top: 1%;
+}
+
+.card{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    align-items: center;
+}
+.item{
+    align-items: center;
+    text-align: center;
+}
+.mr-0 {
+    margin-right: 30px;
+    margin-top: 10px;
+  }
+  .ml-auto {
+    margin-left:auto;
+  }
+  .d-block {
+    display:block;
+  }
+.dm-1{
+    width: 300px;
+}
+.dt-1{
+    width: 300px;
+}
+
+.table-container{
+    width: 500px;
+    margin-top: 20px;
+}

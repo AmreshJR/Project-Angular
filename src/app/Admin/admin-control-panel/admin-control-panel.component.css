@@ -1,0 +1,20 @@
+span{
+    padding: 10px;
+}
+.dropdown-toggle{
+    width: 100%;
+}
+.dropdown-menu{
+    width: 100%;
+}
+.wrapper {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    height: calc(100vh - 20px);
+    
+  }
+  .inner {
+    padding: 12px;
+  }
+
