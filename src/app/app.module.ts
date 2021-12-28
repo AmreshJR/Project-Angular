@@ -8,21 +8,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Ng9PasswordStrengthBarModule } from 'ng9-password-strength-bar';
 import { MaterialExampleModule } from 'src/material.module';
-import { HomeComponent } from './User/user-profile/home/home.component';
 import { AuthGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
 import { TokenIntercepterService } from './token-intercepter.service';
-import { TeamDeatilComponent } from './Admin/team-deatil/team-deatil.component';
-import { EditTeamComponent } from './Admin/edit-team/edit-team.component';
+import { UserAuthGuard } from './user-auth.guard';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     RoutingComponents,
-    HomeComponent,
-    TeamDeatilComponent,
-    EditTeamComponent,
-   
   ],
   imports: [
     BrowserModule,
@@ -34,7 +29,7 @@ import { EditTeamComponent } from './Admin/edit-team/edit-team.component';
     Ng9PasswordStrengthBarModule,
     MaterialExampleModule
   ],
-  providers: [AuthGuard,AuthenticationService,
+  providers: [AuthGuard,UserAuthGuard,AuthenticationService,
     {
       provide:HTTP_INTERCEPTORS,
       useClass: TokenIntercepterService,

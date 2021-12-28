@@ -1,89 +1,86 @@
 <button class="btn btn-outline-warning d-block mr-0 ml-auto" (click)="displayEdit()" type="submit">Edit</button>
 <div class="container-fluid cf" *ngIf="!edit">
-    
-        <h3>Team Under</h3>  
+
+    <h3>Team Under</h3>
     <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle dt" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          {{current}}
+        <button class="btn btn-secondary dropdown-toggle dt" type="button" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            {{current}}
         </button>
         <ul class="dropdown-menu dm" aria-labelledby="dropdownMenuButton1">
-          <li  class="dropdown-item di" *ngFor=" let lead of teamLeads"  aria-current="true" (click)="setTeamLead(lead.userName)" >{{lead.userName}}</li>
-         
+            <li class="dropdown-item di" *ngFor=" let lead of teamLeads" aria-current="true"
+                (click)="setTeamLead(lead.userName)">{{lead.userName}}</li>
+
         </ul>
-      </div>
-     
+    </div>
+
 </div>
 
 <div class="container-fluid table-container">
-    <div class="table-responsive tbr" *ngIf="show" >
-        <table class="table table-hover table-bordered" >
+    <div class="table-responsive tbr" *ngIf="show && !edit">
+        <table class="table table-hover table-bordered">
             <thead class="table dark ">
                 <tr>
                     <th scope="col">User Id</th>
                     <th scope="col">User Name</th>
                     <th scope="col">Assigned To</th>
                     <th scope="col">Team Name</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor=" let user of team" scope="row">
-                    <td width="10%" >{{user.userId}}</td>
-                    <td width="20%" >{{user.userName}}</td>
-                    <td width="20%">{{user.assignedTOUser}}</td >
-                    <td width="20%">{{user.teamName}}</td >
+                    <td width="10%">{{user.userId}}</td>
+                    <td width="20%">{{user.userName}}</td>
+                    <td width="20%">{{user.assignedTOUser}}</td>
+                    <td width="20%">{{user.teamName}}</td>
                 </tr>
             </tbody>
         </table>
-    
-</div>
 
-
-
-<div class="card border-dark mb-3" style="max-width: 330px;" *ngIf="edit">
-    <div class="card-header">Assign Memeber to Team</div>
-    <div class="card-body text-dark">
-        <h5 class="card-title">Team Lead List</h5>
-
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle dt-1" type="button" id="dropdownMenuButton3"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                {{currentEmployee}}
-            </button>
-            <ul class="dropdown-menu dm-1" aria-labelledby="dropdownMenuButton3">
-                <li class="dropdown-item" *ngFor=" let lead of teamLeads" aria-current="true"
-                    (click)="setLead(lead)">{{lead.userName}}</li>
-
-            </ul>
-        </div>
     </div>
-    <div class="card-body text-dark">
-        <h5 class="card-title">Employee List</h5>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle dt-1" type="button" id="dropdownMenuButton2"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                {{selectedEmployee}}
-            </button>
-            <ul class="dropdown-menu dm-1" aria-labelledby="dropdownMenuButton2">
-                <li class="dropdown-item" *ngFor=" let emp of inactive" aria-current="true" (click)="setEmployee(emp)">
-                    {{emp.userName}}-{{emp.role}}</li>
-            </ul>
-        </div>
+
+
+
+    <div class="card border-dark mb-3" style="max-width: 330px;" *ngIf="edit">
+        <div class="card-header">Assign Memeber to Team</div>
+        <form [formGroup]="TeamUpdateForm">
+            <div class="card-body text-dark">
+                <h5 class="card-title">Team Lead List</h5>
+                <div class="form-group">
+                    <select class="form-control" id="formGroupLead" placeholder="Lead" name="lead"
+                        formControlName='assignedTOUser'>
+                        <option value="0" disabled>Select Team Lead</option>
+                        <option *ngFor=" let lead of teamLeads" class="dropdown-item" aria-current="true">{{
+                            lead.userName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body text-dark">
+                <h5 class="card-title">Employee List</h5>
+                <div class="form-group">
+                    <select class="form-control" id="formGroupEmployee" placeholder="Employee" name="employee"
+                        formControlName='userId'>
+                        <option value="0" disabled>Select Employee</option>
+                        <option *ngFor=" let employee of EmployeeList" [value]="employee.userId" class="dropdown-item"
+                            aria-current="true">{{ employee.userName}} - {{employee.role}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body text-dark">
+                <h5 class="card-title">Select Team</h5>
+                <div class="form-group">
+                    <select class="form-control" id="formGroupTeamType" placeholder="TeamType" name="teamType"
+                        formControlName='teamTypeId'>
+                        <option value="0" disabled>Select Team</option>
+                        <option *ngFor=" let team of teamType" class="dropdown-item" aria-current="true"
+                            [value]="team.teamId">{{ team.teamName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body item">
+                <button type="button" [disabled]="!TeamUpdateForm.valid" class="btn btn-primary"
+                    (click)=" sendTeamData()">Update</button>
+            </div>
+        </form>
     </div>
-    <div class="card-body text-dark">
-        <h5 class="card-title">Select Team</h5>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle dt-1" type="button" id="dropdownMenuButton4"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                {{selectedTeam}}
-            </button>
-            <ul class="dropdown-menu dm-1" aria-labelledby="dropdownMenuButton4">
-                <li class="dropdown-item" *ngFor=" let team of teamList" aria-current="true" (click)="setTeam(team)">
-                    {{team.teamName}}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="card-body item" *ngIf="flag1 && flag2 && flag3">
-        <button type="button" class="btn btn-primary" (click)=" sendTeamData()">Primary</button>
-    </div>
-</div>

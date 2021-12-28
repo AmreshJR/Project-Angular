@@ -1,1 +1,57 @@
-<router-outlet></router-outlet>
+<body class="d-flex flex-column min-vh-100">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" *ngIf="isValidRoute()">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="/home">Home</a>
+            </li>
+            <li class="nav-item" *ngIf="isAdmin">
+              <a class="nav-link" routerLink="/admin">Admin Control Panel</a>
+            </li>
+            <li class="nav-item dropdown">
+
+            </li>
+          </ul>
+          <div class="dropdown dropstart profile">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <img [src]="ImageUrl" class="profile-image" alt="profile" width="40" height="40">
+
+            </button>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item " routerLink="/home/profile">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item"><button class="btn btn-outline-success" (click)="logout()"
+                    type="submit">Logout</button></a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </header>
+  <router-outlet></router-outlet>
+  <div class="wrapper" *ngIf="isLoading">
+    <div class="inner">
+      <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+      </mat-spinner>
+    </div>
+  </div>
+
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+      <span class="text-muted"><i class='bx bx-copyright'></i>Amresh</span>
+    </div>
+  </footer>
+
+</body>

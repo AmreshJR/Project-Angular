@@ -1,1 +1,128 @@
-<p>user-profile works!</p>
+<form [formGroup]="userDetailForm" (ngSubmit)="onSubmit()" *ngIf="userProfile">
+    <div class="container rounded bg-white">
+
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <span class="wrap">
+                        <img class="image--cover" width="150px" [src]="imageUrl">
+                        <i class='bx bx-edit' (click)="hide = !hide"></i>
+                    </span>
+                    <div [hidden]="hide" class="input-group">
+                        <input type="file" class="form-control" (change)="profileUpdate($event)" accept="image/*"
+                            id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <button class="btn btn-outline-secondary" (click)="uploadImage()" type="button"
+                            id="inputGroupFileAddon04">Upload</button>
+                    </div>
+                    <span class="font-weight-bold"> {{userProfile.userName}}</span>
+                    <span class="font-weight-bold"><b>User Id: </b> {{userProfile.userId}}</span>
+                    <span class="text-black-50">{{userProfile.email}}</span>
+                    <span> </span>
+                </div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="labels">First Name</label><span class="label label-default"><i
+                                    class='bx bx-edit' (click)="firstName.disabled = false"></i></span>
+                            <div class="grp">
+                                <input type="text" formControlName="firstName" #firstName class="form-control"
+                                    aria-label="Recipient's username" (focusout)="disable('firstName')"
+                                    placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="labels">Last Name</label><span class="label label-default"><i
+                                    class='bx bx-edit' (click)="lastName.disabled = false"></i></span>
+                            <input type="text" formControlName="lastName" #lastName class="form-control"
+                                (focusout)="disable('lastName')" placeholder="Last Name">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <label class="labels">UserName</label>
+                            <input type="text" class="form-control" formControlName="userName" placeholder="UserName">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Email</label>
+                            <input type="email" class="form-control" formControlName="email" placeholder="Email">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Date Of Birth</label>
+                            <input type="date" class="form-control" formControlName="dob" placeholder="Date Of Birth">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Previous Organization</label><span class="label label-default"><i
+                                    class='bx bx-edit' (click)="previous.disabled=false"></i></span>
+                            <input type="text" class="form-control" #previous formControlName="previousOrganizationName"
+                                (focusout)="disable('previousOrganizationName')" placeholder="Previous Organization">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Current Organization</label>
+                            <input type="text" class="form-control" formControlName="currentOrganizationName"
+                                placeholder="Current Organization">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Date Of Joining</label>
+                            <input type="date" class="form-control" formControlName="dateOfJoin"
+                                placeholder="Date Of Joining">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labels">Address</label><span class="label label-default"><i class='bx bx-edit'
+                                    (click)="address.disabled=false"></i></span>
+                            <textarea class="form-control" formControlName="address" #address
+                                placeholder="Enter the Address" (focusout)="disable('address')" id="floatingTextarea2"
+                                style="height: 100px"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="labels">Experiance</label><span class="label label-default"><i
+                                    class='bx bx-edit' (click)="experiance.disabled = false"></i></span>
+                            <input type="text" formControlName="experiance" class="form-control"
+                                (focusout)="disable('experiance')" #experiance placeholder="Experiance">
+                        </div>
+                    </div>
+                    <!-- <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="labels">Country</label>
+                        <input type="text" class="form-control" placeholder="country" >
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">State/Region</label>
+                        <input type="text" class="form-control" value="" placeholder="state"></div>
+                </div> -->
+                    <div class="mt-5 text-center">
+                        <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience">
+                    <span>Edit Experience</span>
+                    <span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span>
+                </div><br>
+                <div class="col-md-12">
+                    <label class="labels">Experience in Designing</label>
+                    <input type="text" class="form-control" placeholder="experience" value="">
+                </div> <br>
+                <div class="col-md-12">
+                    <label class="labels">Additional Details</label>
+                    <input type="text" class="form-control" placeholder="additional details" value="">
+                </div>
+            </div>
+        </div> -->
+        </div>
+    </div>
+
+</form>
+<div class="wrapper" *ngIf="!userProfile">
+    <div class="inner">
+        <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+        </mat-spinner>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+body {
+  background: rgb(99, 39, 120);
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ba68c8;
+}
+.rounded-circle {
+  width: 200px;
+  height: 200px;
+}
+.profile-button {
+  background: rgb(99, 39, 120);
+  box-shadow: none;
+  border: none;
+}
+
+.profile-button:hover {
+  background: #682773;
+}
+
+.profile-button:focus {
+  background: #682773;
+  box-shadow: none;
+}
+
+.profile-button:active {
+  background: #682773;
+  box-shadow: none;
+}
+
+.back:hover {
+  color: #682773;
+  cursor: pointer;
+}
+
+.labels {
+  font-size: 11px;
+}
+
+.add-experience:hover {
+  background: #ba68c8;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px #ba68c8;
+}
+.grp {
+  display: flex;
+}
+.bx:hover {
+  color: #ba68c8;
+}
+.bx {
+  cursor: pointer;
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 20px);
+}
+.inner {
+  padding: 12px;
+}
+/* .circular--landscape
+   {
+        display: inline-block;
+     position: relative;
+      width: 200px;
+       height: 200px; 
+       overflow: hidden;
+        border-radius: 50%;
+     }  */
+.wrap {
+  padding: 5px;
+}
+
+.image--cover {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  margin: 20px;
+  object-fit: cover;
+  object-position: center right;
+}

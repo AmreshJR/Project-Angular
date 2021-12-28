@@ -1,0 +1,30 @@
+.py-3 {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+footer {
+  display: block;
+}
+.mt-auto {
+  margin-top: auto !important;
+}
+.dropstart {
+  border-radius: 50% !important;
+}
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 20px);
+}
+.inner {
+  padding: 12px;
+}

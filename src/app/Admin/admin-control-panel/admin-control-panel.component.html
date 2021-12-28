@@ -1,93 +1,114 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/admin">Control Panel</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"routerLink="/admin/teamdetails">Team Detail</a>
-        </li>
-        <li class="nav-item"  *ngIf="route.children.length !== 0">
-          <a class="nav-link" routerLink="/admin/editteam">Edit</a>
-      </ul>  
-    
-        <button class="btn btn-outline-success" type="submit">Logout</button>
-    </div>
-  </div>
-</nav>
-<router-outlet></router-outlet>
-<div class="table-responsive "  *ngIf="!isLoading && route.children.length === 0" >
-    <table class="table table-hover" >
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">UserId</th>
-                <th scope="col">UserName</th>
-                <th scope="col">UserRole</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor=" let user of Users" scope="row">
-                <td width="10%" >{{user.userId}}</td>
-                <td width="20%" >{{user.userName}}</td>
-                <td width="20%">{{user.role}}</td >
-                <td width="20%">{{user.statusName}}</td>
-                <td width="20%">
-                    <div class="action">
-                      <span><button type="button" class="btn btn-success" (click)="deleteUser(user)"><i class='bx bxs-trash'></i></button> </span>  
-                        <span><button type="button" class="btn btn-warning"  (click)="updateRoleData(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class='bx bx-edit' ></i></button></span>
-                        
-                    </div>
-                  
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <mat-paginator [length] ="length"
-    [pageSize]="pageSize"
-    [pageSizeOptions]="[1, 5, 10, 25, 100]"
-    aria-label="Select page"
-    (page)="onPageChange($event)">
-</mat-paginator>
-</div>
-<div class="wrapper" *ngIf="isLoading && route.children.length === 0">
-  <div class="inner" >
-    <mat-spinner 
-    role="progressbar"
-    mode="indeterminate"
-    color="primary" 
-    mode="indeterminate">
-  </mat-spinner>
-</div>
-</div>  
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  {{ newRole }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li *ngFor=" let role of Roles"  class="dropdown-item" aria-current="true" (click)="setRole(role.role)" >{{ role.role}}</li>
-                 
-                </ul>
-              </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="updateRole()">Update</button>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/admin">Admin Control Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/admin/teamdetails">Team Detail</a>
+          </li>
+        </ul>
+        <div class="dropdown dropstart profile">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img [src]="ImageUrl" class="profile-image" alt="profile" width="30" height="30">
+
+          </button>
+          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item " routerLink="/home/profile">Profile</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item"><button class="btn btn-outline-success" (click)="logout()"
+                  type="submit">Logout</button></a></li>
+          </ul>
         </div>
       </div>
     </div>
+  </nav>
+</header>
+<router-outlet></router-outlet>
+<div class="table-responsive " *ngIf="!isLoading && route.children.length === 0">
+  <table class="table table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">UserId</th>
+        <th scope="col">UserName</th>
+        <th scope="col">UserRole</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor=" let user of Users" scope="row">
+        <td width="10%">{{user.userId}}</td>
+        <td width="20%">{{user.userName}}</td>
+        <td width="20%">{{user.role}}</td>
+        <td width="20%">{{user.statusName}}</td>
+        <td width="20%">
+          <div class="action">
+            <span><button type="button" class="btn " (click)="onModelUpdate(user)" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"><i class='bx bxs-edit'></i></button> </span>
+            <!-- <span><button type="button" class="btn btn-warning"  (click)="updateRoleData(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class='bx bx-edit' ></i></button></span> -->
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="[1, 5, 10, 25, 100]"
+    aria-label="Select page" (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
+<div class="wrapper" *ngIf="isLoading && route.children.length === 0">
+  <div class="inner">
+    <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+    </mat-spinner>
   </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Role</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="EditdetailForm">
+          <div class="form-group">
+            <label for="formGroupUserName">User Name:</label>
+            <input type="text" class="form-control" id="formGroupUserName" placeholder="User Name" name="userName"
+              formControlName='userName'>
+          </div>
+
+          <div class="form-group">
+            <label for="formGroupEmail">Email:</label>
+            <input type="text" class="form-control" id="formGroupEmail" placeholder="Email" name="email"
+              formControlName='email'>
+          </div>
+          <div class="form-group">
+            <label for="formGroupStatus">Role:</label>
+            <select class="form-control" id="formGroupRole" placeholder="Role" name="role" formControlName='newRole'>
+              <option *ngFor=" let role of Roles" class="dropdown-item" aria-current="true">{{ role.role}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="submitUpdate()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

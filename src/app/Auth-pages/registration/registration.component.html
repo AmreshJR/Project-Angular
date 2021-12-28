@@ -1,11 +1,13 @@
-<div class="container-fluid mb-5" >
-    <form [formGroup]="SignUpForm"  (ngSubmit)="onSubmit()">
-        <div >
+<div class="container-fluid mb-5">
+    <form [formGroup]="SignUpForm" (ngSubmit)="onSubmit()">
+        <div>
             <h1 class="head">Create Account</h1>
         </div>
         <div class="group">
             <div class="flex-item form-floating mb-2">
-                <input type="text" formControlName="FirstName" placeholder="FirstName" id="floatingInputFirst" class= "form-control input-lg name"  [class.is-invalid]="FirstName?.invalid && FirstName?.touched" [class.valid]="FirstName?.valid">
+                <input type="text" formControlName="FirstName" placeholder="FirstName" id="floatingInputFirst"
+                    class="form-control input-lg name" [class.is-invalid]="FirstName?.invalid && FirstName?.touched"
+                    [class.valid]="FirstName?.valid">
                 <label for="floatingInputFirst">First Name</label>
                 <div *ngIf="FirstName?.invalid && FirstName?.touched">
                     <small class="text-danger" *ngIf="FirstName?.hasError('required')">First Name is required</small>
@@ -13,7 +15,9 @@
                 </div>
             </div>
             <div class="flex-item form-floating mb-2">
-                <input type="text" formControlName="LastName" placeholder="LastName" id="floatingInputLast" class= "form-control input-lg"  [class.is-invalid]="LastName?.invalid && LastName?.touched" [class.valid]="LastName?.valid">
+                <input type="text" formControlName="LastName" placeholder="LastName" id="floatingInputLast"
+                    class="form-control input-lg" [class.is-invalid]="LastName?.invalid && LastName?.touched"
+                    [class.valid]="LastName?.valid">
                 <label for="floatingInputFirst">Last Name</label>
                 <div *ngIf="LastName?.invalid && LastName?.touched">
                     <small class="text-danger" *ngIf="LastName?.hasError('required')">Last Name is required</small>
@@ -22,7 +26,9 @@
             </div>
         </div>
         <div class="flex-item form-floating mb-2">
-            <input type="text" formControlName="UserName" placeholder="UserName" id="floatingInputUser" (focusout)="onFocusOut($event)" class= "form-control input-lg"  [class.is-invalid]="userName?.invalid && userName?.touched" [class.valid]="userName?.valid">
+            <input type="text" formControlName="UserName" placeholder="UserName" id="floatingInputUser"
+                (focusout)="onFocusOut($event)" class="form-control input-lg"
+                [class.is-invalid]="userName?.invalid && userName?.touched" [class.valid]="userName?.valid">
             <label for="floatingInputFirst">User Name</label>
             <div *ngIf="userName?.invalid && userName?.touched">
                 <small class="text-danger" *ngIf="userName?.hasError('required')">User Name is required</small>
@@ -30,7 +36,9 @@
             </div>
         </div>
         <div class="form-floating mb-2">
-                     <input type="email" formControlName="Email" placeholder="Email" id="floatingInput" class= "form-control input-lg"  [class.is-invalid]="Email?.invalid && Email?.touched" [class.valid]="Email?.valid">
+            <input type="email" formControlName="Email" placeholder="Email" id="floatingInput"
+                class="form-control input-lg" [class.is-invalid]="Email?.invalid && Email?.touched"
+                [class.valid]="Email?.valid">
             <label for="floatingInput">Email address</label>
             <div *ngIf="Email?.invalid && Email?.touched">
                 <small class="text-danger" *ngIf="Email?.hasError('required')">Email is required</small>
@@ -39,68 +47,78 @@
         </div>
         <div class="date-group">
             <div class="form-floating mb-2">
-                <input type="date" placeholder="D.O.B" formControlName="DOB" class= "form-control input-lg" id="floatingInputDOB" [class.is-invalid]="DBO?.invalid && DBO?.touched" [class.valid]="DBO?.valid">
+                <input type="date" placeholder="D.O.B" formControlName="DOB" class="form-control input-lg"
+                    id="floatingInputDOB" [class.is-invalid]="DBO?.invalid && DBO?.touched" [class.valid]="DBO?.valid">
                 <label for="floatingInputDOB">D.O.B</label>
                 <div *ngIf="DBO?.invalid && DBO?.touched">
                     <small class="text-danger" *ngIf="DBO?.hasError('required')">D.O.B required</small>
                 </div>
             </div>
         </div>
-        <div formGroupName = "passwords">
+        <div formGroupName="passwords">
             <div class="form-floating mb-2 ">
-                <input name="Password" type="Password" placeholder="Password" formControlName="Password" id="floatingInputPass" class= "form-control input-lg"  [class.is-invalid]="Password?.invalid && Password?.touched" [class.valid]="Password?.valid" >
+                <input name="Password" type="Password" placeholder="Password" formControlName="Password"
+                    id="floatingInputPass" class="form-control input-lg"
+                    [class.is-invalid]="Password?.invalid && Password?.touched" [class.valid]="Password?.valid">
                 <label for="floatingInputPass">Password</label>
                 <div *ngIf="Password?.invalid && Password?.touched">
                     <small class="text-danger" *ngIf="Password?.hasError('required')">Password is required</small>
                     <small class="text-danger" *ngIf="Password?.hasError('pattern')">Password is Weak</small>
                 </div>
                 <span class="pass-strength">
-                    <ng9-password-strength-bar [passwordToCheck]="Password?.value" [barLabel]="barLabel"[customThresholds]="thresholds"
-                    [barColors]="myColors" [strengthLabels]="strengthLabels">
-                </ng9-password-strength-bar>
+                    <ng9-password-strength-bar [passwordToCheck]="Password?.value" [barLabel]="barLabel"
+                        [customThresholds]="thresholds" [barColors]="myColors" [strengthLabels]="strengthLabels">
+                    </ng9-password-strength-bar>
                 </span>
-                
+
             </div>
-            
-            <div class="form-floating mb-2 pass-grp" >
-                <input type="Password" placeholder="ConfirmPassword"  formControlName="confirmPassword" id="floatingInputConf" class= "form-control input-lg"  [class.is-invalid]="ConfirmPassword?.invalid && ConfirmPassword?.touched" [class.match]="ConfirmPassword?.valid &&  ConfirmPassword?.touched && !ConfirmPassword?.hasError('confirmPasswordMatch')" >
+
+            <div class="form-floating mb-2 pass-grp">
+                <input type="Password" placeholder="ConfirmPassword" formControlName="confirmPassword"
+                    id="floatingInputConf" class="form-control input-lg"
+                    [class.is-invalid]="ConfirmPassword?.invalid && ConfirmPassword?.touched"
+                    [class.match]="ConfirmPassword?.valid &&  ConfirmPassword?.touched && !ConfirmPassword?.hasError('confirmPasswordMatch')">
                 <label for="floatingInputConf">Confirm Password</label>
                 <div *ngIf="ConfirmPassword?.invalid && ConfirmPassword?.touched">
                     <small class="text-danger" *ngIf="ConfirmPassword?.hasError('required')">Required</small>
-                    <small class="text-danger" *ngIf="ConfirmPassword?.hasError('confirmPasswordMatch')">Password Does Not Match</small>
+                    <small class="text-danger" *ngIf="ConfirmPassword?.hasError('confirmPasswordMatch')">Password Does
+                        Not Match</small>
                 </div>
             </div>
-            
+
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Enter the Address" formControlName="Address" id="floatingTextarea2" style="height: 100px" [class.is-invalid]="Address?.invalid && Address?.touched" [class.valid]="Address?.valid" ></textarea>
+            <textarea class="form-control" placeholder="Enter the Address" formControlName="Address"
+                id="floatingTextarea2" style="height: 100px" [class.is-invalid]="Address?.invalid && Address?.touched"
+                [class.valid]="Address?.valid"></textarea>
             <label for="floatingTextarea2">Address</label>
             <div *ngIf="Address?.invalid && Address?.touched">
                 <small class="text-danger" *ngIf="Address?.hasError('required')">Required</small>
                 <small class="text-danger" *ngIf="Address?.hasError('AddressMatch')">Password Does Not Match</small>
             </div>
-          </div>
-        <div class="submit">
-            <button type="submit" [disabled]="!SignUpForm.valid"  class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal"> Create Account</button>
         </div>
-        
+        <div class="submit">
+            <button type="submit" [disabled]="!SignUpForm.valid" class="btn btn-primary " data-bs-toggle="modal"
+                data-bs-target="#exampleModal"> Create Account</button>
+        </div>
+
         <!-- Mode -->
         <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Status</h5>
-                  <button  type="button" class="btn-close" data-bs-dismiss="modal" (click)="reload()" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="reload()"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{modelMessage}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="redirect()" class="btn btn-primary">OK</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  {{modelMessage}}
-                </div>
-                <div class="modal-footer">
-                  <button type="button" (click)="redirect()" class="btn btn-primary">OK</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
     </form>
 </div>
- 
