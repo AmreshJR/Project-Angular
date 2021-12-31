@@ -1,1 +1,123 @@
+<div *ngIf="route.children.length === 0">
+    <form [formGroup]="DateForm" (ngSubmit)="dateFilter()">
+        <div class="flex-container">
+            <div class="child">
+                <div class="date-group">
+                    <div class="form-floating mb-2">
+                        <input type="date" placeholder="Start Date" formControlName="startDate" class="form-control input-lg"
+                            id="floatingInputStartDate" [class.is-invalid]="startDate?.invalid && startDate?.touched" [class.valid]="startDate?.valid">
+                        <label for="floatingInputStartDate">Start Date</label>
+                        <div *ngIf="startDate?.invalid && startDate?.touched">
+                            <small class="text-danger" *ngIf="startDate?.hasError('required')"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="child">
+                <div class="date-group">
+                    <div class="form-floating mb-2">
+                        <input type="date" placeholder="End Date" formControlName="endDate" class="form-control input-lg"
+                            id="floatingInputEndDate" [class.is-invalid]="endDate?.invalid && endDate?.touched" [class.valid]="endDate?.valid">
+                        <label for="floatingInputEndDate">End Date</label>
+                        <div *ngIf="endDate?.invalid && endDate?.touched">
+                            <small class="text-danger" *ngIf="endDate?.hasError('required')"></small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="child">
+                 <button [disabled]="!DateForm.valid" type="submit" class="btn btn-light arrow"><i class='bx bx-right-arrow-alt'></i></button>
+            </div>
+
+            <a class="nav-link d-block mr-0 ml-auto filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class='bx bx-filter-alt' ></i> Filter</a>
+            <a type="button d-block mr-0 ml-auto remove-filter" (click)="withoutFilter()" class="btn-close text-reset" *ngIf="filter"></a>
+
+        </div>
+
+</form>
+
+    <div class="table-responsive " *ngIf="!isLoading">
+        <table class="table table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">User Name</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Team</th>
+              <th scope="col">Team Lead</th>
+              <th scope="col">Date Of Joining</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor=" let user of Users" scope="row">
+              <td width="12%">{{user.userName}}</td>
+              <td width="12%">{{user.firstName}}</td>
+              <td width="12%">{{user.lastName}}</td>
+              <td width="12%" >{{user.role}}</td>
+              <td width="12%" >{{user.teamName}}</td>
+              <td width="12%">{{user.teamLead}}</td>
+              <td width="12%">{{user.dateOfJoin}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>
+  <div class="wrapper" *ngIf="isLoading && route.children.length === 0">
+    <div class="inner">
+      <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+      </mat-spinner>
+    </div>
+  </div>
+  
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">Filter</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="child">
+  <div class="dropdown" >
+    <div class="flex-container">
+      <h4>Filters: </h4>
+      <button class="btn btn-secondary dropdown-toggle dt" type="button" id="dropdownMenuButton1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          {{showFilter}}
+      </button>
+      <ul class="dropdown-menu dm" aria-labelledby="dropdownMenuButton1">
+          <li class="dropdown-item di" *ngFor=" let filter of filters" aria-current="true"
+              (click)="showFilter = filter ">{{filter}}</li>
+      </ul>
+    </div>
+</div>
+<div class="button-container" *ngIf="showFilter == 'TeamLead'" >
+  <div class="button-child" *ngFor=" let lead of teamLeads" >
+    <button class="btn btn-primary team-btn" type="button" (click)="teamLeadFilter(lead.userName)" [class.activate]= "active(lead.userName)" >
+        {{lead.userName}}<i *ngIf="active(lead.userName)" class='bx bx-x'></i>
+    </button>
+  </div>
+</div>
+<div class="button-container" *ngIf="showFilter == 'Team'" >
+  <div class="button-child" *ngFor=" let team of teamType" >
+    <button class="btn btn-primary team-btn" type="button" (click)="teamFilter(team.teamName)" [class.activate]= "active(team.teamName)" >
+        {{team.teamName}}<i *ngIf="active(team.teamName)" class='bx bx-x'></i>
+    </button>
+  </div>
+</div>
+</div>
+  </div>
+</div>
 <router-outlet></router-outlet>
+
+<!-- <div class="dropdown  filter-btn" *ngIf="showFilter == 'TeamLead'" >
+  <button class="btn btn-secondary dropdown-toggle dt" type="button" id="dropdownMenuButton1"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      {{current}}
+  </button>
+  <ul class="dropdown-menu dm" aria-labelledby="dropdownMenuButton1">
+      <li class="dropdown-item di" *ngFor=" let lead of teamLeads" aria-current="true"
+          (click)="teamLeadFilter(lead.userName)">{{lead.userName}}</li>
+
+  </ul>
+</div> -->

@@ -6,7 +6,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class TokenIntercepterService implements HttpInterceptor{
-  constructor(private authservice: AuthenticationService,private inject: Injector) {  }
+  constructor(private authservice: AuthenticationService) {  }
   intercept(req:any, next:any) {
     let token = this.authservice.getToken();
     let tokenizedReq = req.clone({

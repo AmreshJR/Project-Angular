@@ -87,3 +87,12 @@ h2 span {
 .inner {
   padding: 12px;
 }
+
+.reset{
+  text-decoration: none;
+  color: black;
+}
+a:hover{
+  color: #1877f2;
+  cursor:pointer;
+}

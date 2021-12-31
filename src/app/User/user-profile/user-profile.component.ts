@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Profile } from 'Dto/profile';
+import { DtoUpdateProfileData } from 'Dto/DtoUpdateProfileData';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { UserService } from 'src/app/user.service';
 
@@ -22,15 +22,17 @@ export class UserProfileComponent implements OnInit {
   public dbPath: string = '';
   public imageUrl: string = '';
   userDetailForm: FormGroup = new FormGroup({});
+  PassForm: FormGroup = new FormGroup({});
+
   constructor(
     private fb: FormBuilder,
     private service: UserService,
     private authService: AuthenticationService
   ) {}
-
   ngOnInit(): void {
     this.loadUserProfile();
     window.scroll(0, 0);
+    
   }
 
   loadUserProfile() {
@@ -38,6 +40,7 @@ export class UserProfileComponent implements OnInit {
     this.service
       .getUserProfile(this.authService.UserObject().id)
       .subscribe((data) => {
+        console.log(data);
         if (data.imagePath == null)
           this.imageUrl =
             '../../../assets/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg';
@@ -102,6 +105,14 @@ export class UserProfileComponent implements OnInit {
       ],
       experiance: [{ value: '', disabled: true }, [Validators.maxLength(50)]],
     });
+    this.PassForm = this.fb.group({
+      Password: ['', [Validators.required,Validators.pattern(
+        /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
+      )]],
+    });
+  }
+  get Password() {
+    return this.PassForm.get('Password');
   }
   enable() {
     console.log('hello');
@@ -109,9 +120,35 @@ export class UserProfileComponent implements OnInit {
   disable(id: string) {
     this.userDetailForm.controls[id].disable();
   }
-  onSubmit() {
-    console.log(this.userDetailForm.value);
+
+  submitPassword(){
+    this.service.ConfirmPassword(this.PassForm.value).subscribe(
+      data=>{
+        if(data.status == true)
+        this.onSubmit();
+        else
+        console.log("Failed to update");
+      },
+      err=>{
+        console.log("err");
+      }
+    )
+console.log(this.PassForm.value);
   }
+  onSubmit() {
+    var profileData:DtoUpdateProfileData = {
+      firstName :this.userDetailForm.value.firstName,
+      lastName  :this.userDetailForm.value.lastName,
+      address   :this.userDetailForm.value.address,
+      previousOrganizationName:this.userDetailForm.value.previousOrganizationName,
+      experiance  :this.userDetailForm.value.experiance
+    }
+    this.service.UpdateUserProfileData(profileData).subscribe(
+      data=>{console.log(data);}
+    )
+  }
+
+  //Preview Profile Upload
   profileUpdate(event: any) {
     this.fileUpload = <File>event.target.files[0];
     var reader = new FileReader();
@@ -120,6 +157,8 @@ export class UserProfileComponent implements OnInit {
     };
     reader.readAsDataURL(this.fileUpload);
   }
+
+  //Uploda Profile Image
   uploadImage() {
     const fileData = new FormData();
     fileData.append('image', this.fileUpload, this.fileUpload.name);

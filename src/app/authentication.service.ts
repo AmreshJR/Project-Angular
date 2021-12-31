@@ -42,6 +42,28 @@ export class AuthenticationService {
       { headers: headers }
     );
   }
+  ForgetPassword(data: any) {
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json; charset=utf-8'
+    );
+
+    return this.http.post<any>(
+      `${environment.BaseURL}api/Account/ForgetPassword`,
+      data
+    );
+  }
+  ResetPassword(data: any) {
+    const headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/json; charset=utf-8'
+    );
+
+    return this.http.post<any>(
+      `${environment.BaseURL}api/Account/ResetPassword`,
+      data
+    );
+  }
   getUserProfile(): Observable<any> {
     return this.http.get<any>(`${environment.BaseURL}api/User/GetUserProfile`);
   }

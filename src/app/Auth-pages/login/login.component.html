@@ -25,6 +25,9 @@
                 <small class="text-danger" *ngIf="Password?.hasError('pattern')">Password is Weak</small>
             </div>
         </div>
+        <div class="reset">
+            <a class="reset" routerLink="/forgetpassword"  data-bs-toggle="tooltip" data-bs-placement="top" title="Need help ?">Forget your Password ?</a>
+        </div>
 
         <div class="submit">
             <button type="submit" [disabled]="!LoginForm.valid" class="btn btn-primary "> LogIn</button>
@@ -32,6 +35,7 @@
         <h2><span>OR</span></h2>
         <div class="signup ">
             <button type="button" class="btn btn-success" (click)="signUpRedirect()">Signup</button>
+
         </div>
         <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf=status>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"

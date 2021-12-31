@@ -13,7 +13,6 @@ import { AuthenticationService } from './authentication.service';
 import { TokenIntercepterService } from './token-intercepter.service';
 import { UserAuthGuard } from './user-auth.guard';
 
-
 @NgModule({
   declarations: [
     AppComponent,

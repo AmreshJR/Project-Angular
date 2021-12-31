@@ -27,7 +27,6 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
               <li><a class="dropdown-item " routerLink="/home/profile">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -41,14 +40,14 @@
     </nav>
   </header>
   <router-outlet></router-outlet>
-  <div class="wrapper" *ngIf="isLoading">
+  <div class="wrapper" *ngIf="isLoading  && router.children.length === 0">
     <div class="inner">
       <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
       </mat-spinner>
     </div>
   </div>
 
-  <footer class="footer mt-auto py-3 bg-light">
+  <footer class="footer mt-auto py-3 bg-light" *ngIf="isValidRoute()">
     <div class="container">
       <span class="text-muted"><i class='bx bx-copyright'></i>Amresh</span>
     </div>

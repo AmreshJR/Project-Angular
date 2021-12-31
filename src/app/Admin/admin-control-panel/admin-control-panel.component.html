@@ -26,7 +26,6 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownMenuButton2">
             <li><a class="dropdown-item " routerLink="/home/profile">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -58,8 +57,8 @@
         <td width="20%">{{user.statusName}}</td>
         <td width="20%">
           <div class="action">
-            <span><button type="button" class="btn " (click)="onModelUpdate(user)" data-bs-toggle="modal"
-                data-bs-target="#exampleModal"><i class='bx bxs-edit'></i></button> </span>
+            <span><button type="button" class="btn" (click)="onModelUpdate(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+              ><i class='bx bxs-edit' data-bs-toggle="tooltip" data-bs-placement="top" title="Edit User Role, Email, UserName"></i></button> </span>
             <!-- <span><button type="button" class="btn btn-warning"  (click)="updateRoleData(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class='bx bx-edit' ></i></button></span> -->
           </div>
 
