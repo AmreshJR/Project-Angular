@@ -23,6 +23,9 @@ export class UserProfileComponent implements OnInit {
   public imageUrl: string = '';
   userDetailForm: FormGroup = new FormGroup({});
   PassForm: FormGroup = new FormGroup({});
+  public modalMessage!: string;
+  public responseLoading: boolean = false;
+  public passwordNotMatched: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -30,17 +33,14 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthenticationService
   ) {}
   ngOnInit(): void {
+    this.createForm();
     this.loadUserProfile();
     window.scroll(0, 0);
-    
   }
 
   loadUserProfile() {
-    this.createForm();
-    this.service
-      .getUserProfile(this.authService.UserObject().id)
-      .subscribe((data) => {
-        console.log(data);
+    this.service.getUserProfile(this.authService.UserObject().id).subscribe(
+      (data) => {
         if (data.imagePath == null)
           this.imageUrl =
             '../../../assets/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg';
@@ -52,7 +52,11 @@ export class UserProfileComponent implements OnInit {
           email: data.email,
         };
         this.userDetailForm.patchValue(data);
-      });
+      },
+      (err) => {
+        if (err.status == 401) this.authService.LogOut();
+      }
+    );
     this.createForm();
     this.isLoading = false;
   }
@@ -106,46 +110,57 @@ export class UserProfileComponent implements OnInit {
       experiance: [{ value: '', disabled: true }, [Validators.maxLength(50)]],
     });
     this.PassForm = this.fb.group({
-      Password: ['', [Validators.required,Validators.pattern(
-        /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
-      )]],
+      Password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/
+          ),
+        ],
+      ],
     });
   }
   get Password() {
     return this.PassForm.get('Password');
   }
-  enable() {
-    console.log('hello');
-  }
   disable(id: string) {
     this.userDetailForm.controls[id].disable();
   }
 
-  submitPassword(){
+  submitPassword() {
     this.service.ConfirmPassword(this.PassForm.value).subscribe(
-      data=>{
-        if(data.status == true)
-        this.onSubmit();
-        else
-        console.log("Failed to update");
+      (data) => {
+        if (data.statusCode == 200) {
+          this.responseLoading = true;
+          this.onSubmit();
+        } else {
+          this.passwordNotMatched = true;
+          this.modalMessage = 'Password Not Match';
+        }
       },
-      err=>{
-        console.log("err");
+      (err) => {
+        this.passwordNotMatched = true;
       }
-    )
-console.log(this.PassForm.value);
+    );
   }
   onSubmit() {
-    var profileData:DtoUpdateProfileData = {
-      firstName :this.userDetailForm.value.firstName,
-      lastName  :this.userDetailForm.value.lastName,
-      address   :this.userDetailForm.value.address,
-      previousOrganizationName:this.userDetailForm.value.previousOrganizationName,
-      experiance  :this.userDetailForm.value.experiance
-    }
-    this.service.UpdateUserProfileData(profileData).subscribe(
-      data=>{console.log(data);}
-    )
+    var profileData: DtoUpdateProfileData = {
+      firstName: this.userDetailForm.value.firstName,
+      lastName: this.userDetailForm.value.lastName,
+      address: this.userDetailForm.value.address,
+      previousOrganizationName:
+        this.userDetailForm.value.previousOrganizationName,
+      experiance: this.userDetailForm.value.experiance,
+    };
+    this.service.UpdateUserProfileData(profileData).subscribe((data) => {
+      if (data.statusCode == 200) {
+        this.modalMessage = 'Profile Updated';
+        this.loadUserProfile();
+      } else this.modalMessage = 'Failed to Update. Try again';
+
+      this.responseLoading = false;
+    });
   }
 
   //Preview Profile Upload
@@ -162,8 +177,6 @@ console.log(this.PassForm.value);
   uploadImage() {
     const fileData = new FormData();
     fileData.append('image', this.fileUpload, this.fileUpload.name);
-    this.service
-      .uploadUserProfileImage(fileData)
-      .subscribe((data) => console.log(data));
+    this.service.uploadUserProfileImage(fileData).subscribe((data) => {});
   }
 }

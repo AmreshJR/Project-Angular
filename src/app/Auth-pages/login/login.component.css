@@ -88,11 +88,11 @@ h2 span {
   padding: 12px;
 }
 
-.reset{
+.reset {
   text-decoration: none;
   color: black;
 }
-a:hover{
+a:hover {
   color: #1877f2;
-  cursor:pointer;
+  cursor: pointer;
 }

@@ -37,3 +37,7 @@ span {
   object-fit: cover;
   object-position: center right;
 }
+
+.mod {
+  margin-left: 40%;
+}

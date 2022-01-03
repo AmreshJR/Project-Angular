@@ -101,24 +101,30 @@
             <button type="submit" [disabled]="!SignUpForm.valid" class="btn btn-primary " data-bs-toggle="modal"
                 data-bs-target="#exampleModal"> Create Account</button>
         </div>
+    </form>
+</div>
+<!-- Mode -->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="reload()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="!isLoading">
+                {{modelMessage}}
+            </div>
+            <div class="modal-body loader" *ngIf="isLoading">
+                <span>
 
-        <!-- Mode -->
-        <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="reload()"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{modelMessage}}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" (click)="redirect()" class="btn btn-primary">OK</button>
-                    </div>
-                </div>
+                    <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+                    </mat-spinner>
+                </span>
+            </div>
+            <div class="modal-footer" *ngIf="!isLoading">
+                <button type="button" (click)="redirect()" class="btn btn-primary">OK</button>
             </div>
         </div>
-    </form>
+    </div>
 </div>

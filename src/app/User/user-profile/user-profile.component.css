@@ -75,6 +75,9 @@ body {
 .wrap {
   padding: 5px;
 }
+.mod {
+  margin-left: 40%;
+}
 
 .image--cover {
   width: 170px;

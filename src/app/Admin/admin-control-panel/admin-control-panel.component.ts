@@ -22,7 +22,8 @@ export class AdminControlPanelComponent implements OnInit {
   public pageSize: number = 5;
   public ImageUrl: string = '';
   public EditdetailForm: FormGroup = new FormGroup({});
-
+  public modalMessage!: string;
+  public modalLoading: boolean = true;
   constructor(
     private service: AdminService,
     private fb: FormBuilder,
@@ -50,7 +51,13 @@ export class AdminControlPanelComponent implements OnInit {
     );
     this.authService.getUserProfile().subscribe(
       (data) => {
-        this.ImageUrl = `https://localhost:44362/${data.dbPath}`;
+        this.isLoading = true;
+        if (data.dbPath != null)
+          this.ImageUrl = `https://localhost:44362/${data.dbPath}`;
+        else
+          this.ImageUrl =
+            '../assets/78-785827_user-profile-avatar-login-account-male-user-icon.png';
+
         this.isLoading = false;
       },
       (err) => {
@@ -77,10 +84,12 @@ export class AdminControlPanelComponent implements OnInit {
     });
   }
   submitUpdate() {
+    this.modalLoading = true;
     this.service.updateUserData(this.EditdetailForm.value).subscribe((data) => {
-      console.log(data);
-      if ((data.status = true)) '';
-      else '';
+      if (data.statusCode == 200) this.modalMessage = 'User Updated';
+      else this.modalMessage = 'Error Occured, Try again';
+
+      this.modalLoading = false;
     });
   }
 

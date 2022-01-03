@@ -96,7 +96,7 @@
                 </div> -->
                     <div class="mt-5 text-center">
                         <button class="btn btn-primary profile-button" type="button" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">Save Profile</button>
+                            data-bs-target="#exampleModal">Save Profile</button>
                     </div>
                 </div>
             </div>
@@ -122,33 +122,36 @@
 </form>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Verification</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="PassForm">
-            <div class="form-floating mb-3">
-                <input type="Password" placeholder="Password" formControlName="Password" id="floatingInputPass"
-                    class="form-control input-lg" [class.is-invalid]="Password?.invalid && Password?.touched"
-                    [class.valid]="Password?.valid">
-                <label for="floatingInputPass">Password</label>
-                <div *ngIf="Password?.invalid && Password?.touched">
-                    <small class="text-danger" *ngIf="Password?.hasError('required')">Password is required</small>
-                    <small class="text-danger" *ngIf="Password?.hasError('pattern')">Password is Weak</small>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Verification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </form>
+            <div class="modal-body">
+                <form [formGroup]="PassForm">
+                    <div class="form-floating mb-3">
+                        <input type="Password" placeholder="Password" formControlName="Password" id="floatingInputPass"
+                            class="form-control input-lg" [class.is-invalid]="Password?.invalid && Password?.touched"
+                            [class.valid]="Password?.valid">
+                        <label for="floatingInputPass">Password</label>
+                        <div *ngIf="Password?.invalid && Password?.touched">
+                            <small class="text-danger" *ngIf="Password?.hasError('required')">Password is
+                                required</small>
+                            <small class="text-danger" *ngIf="Password?.hasError('pattern')">Password is Weak</small>
+                            <small class="text-danger" *ngIf="passwordNotMatched">Password Not Matched</small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal1" (click)="submitPassword()">Confirm Password</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary"  (click)="submitPassword()">Confirm Password</button>
-        </div>
-      </div>
     </div>
-  </div>
-  
+</div>
+
 <div class="wrapper" *ngIf="!userProfile">
     <div class="inner">
         <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
@@ -156,3 +159,27 @@
     </div>
 </div>
 
+<div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal1Label">Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="!responseLoading">
+                {{modalMessage}}
+            </div>
+            <div class="modal-body loader" *ngIf="responseLoading">
+                <span>
+
+                    <mat-spinner class="mod" role="progressbar" mode="indeterminate" color="primary"
+                        mode="indeterminate">
+                    </mat-spinner>
+                </span>
+            </div>
+            <div class="modal-footer" *ngIf="!responseLoading">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

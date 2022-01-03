@@ -45,3 +45,6 @@ p {
   width: 500px;
   margin-top: 20px;
 }
+mat-spinner {
+  margin-left: 40%;
+}

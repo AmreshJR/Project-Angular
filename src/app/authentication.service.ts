@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { DtoLoginResponse } from 'Dto/DtoLoginResponse';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DtoLogIn } from './Auth-pages/login/DtoLogIn';
 import { DtoSignUp } from './Auth-pages/registration/DtoSignUp';
@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  private logged = new ReplaySubject<boolean>(1);
+  public isLog = this.logged.asObservable();
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
@@ -102,7 +104,6 @@ export class AuthenticationService {
   }
   saveUser(token: any) {
     const parseJwt = JSON.parse(atob(token.split('.')[1]));
-    console.log(parseJwt);
     const userData = this.encryptData(
       JSON.stringify({
         isAdmin:
@@ -118,5 +119,13 @@ export class AuthenticationService {
       })
     );
     localStorage.setItem('currentUser', userData);
+    this.logged.next(true);
+  }
+  checkStatus(){
+    if(this.getToken())
+      this.logged.next(true);
+      else
+      this.logged.next(false);
+    
   }
 }

@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { DtoFilter } from 'Dto/DtoFilter';
 import { DtoPage } from 'Dto/DtoPage';
+import { AuthenticationService } from 'src/app/authentication.service';
 import { UserService } from 'src/app/user.service';
 
 @Component({
@@ -26,16 +27,21 @@ export class HomeComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private service: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
     this.withoutFilter();
     var roleData = { role: 'TeamLead' };
-    this.service.getTeamLead(roleData).subscribe((data) => {
-      console.log(data);
-      this.teamLeads = data;
-    });
+    this.service.getTeamLead(roleData).subscribe(
+      (data) => {
+        this.teamLeads = data;
+      },
+      (err) => {
+        if (err.status == 401) this.authService.LogOut();
+      }
+    );
 
     this.service.getTeamType().subscribe((data) => (this.teamType = data));
 
@@ -61,9 +67,9 @@ export class HomeComponent implements OnInit {
   }
   withoutFilter() {
     this.service.WithoutFilter().subscribe((data) => {
-      console.log(data);
       this.populateEmpty(data.result);
       this.filter = false;
+      this.isActive = '';
       this.Users = data.result;
     });
   }
@@ -74,7 +80,6 @@ export class HomeComponent implements OnInit {
       this.populateEmpty(data.result);
       this.Users = data.result;
     });
-    console.log(this.DateForm.value);
   }
   teamLeadFilter(lead: string) {
     this.isActive = lead;

@@ -1,4 +1,4 @@
-<div class="container-fluid mb-5">
+<div class="container-fluid mb-5" *ngIf="!isLoading">
     <form [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
         <div class="head">
             <h1 class="head">Log In</h1>
@@ -26,7 +26,8 @@
             </div>
         </div>
         <div class="reset">
-            <a class="reset" routerLink="/forgetpassword"  data-bs-toggle="tooltip" data-bs-placement="top" title="Need help ?">Forget your Password ?</a>
+            <a class="reset" routerLink="/forgetpassword" data-bs-toggle="tooltip" data-bs-placement="top"
+                title="Need help ?">Forget your Password ?</a>
         </div>
 
         <div class="submit">
@@ -53,6 +54,7 @@
 </div>
 <div class="wrapper" *ngIf="isLoading">
     <div class="inner">
+        <h4>Lodaing...</h4>
         <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
         </mat-spinner>
     </div>

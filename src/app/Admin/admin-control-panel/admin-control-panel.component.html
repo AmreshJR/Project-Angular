@@ -57,8 +57,9 @@
         <td width="20%">{{user.statusName}}</td>
         <td width="20%">
           <div class="action">
-            <span><button type="button" class="btn" (click)="onModelUpdate(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" 
-              ><i class='bx bxs-edit' data-bs-toggle="tooltip" data-bs-placement="top" title="Edit User Role, Email, UserName"></i></button> </span>
+            <span><button type="button" class="btn" (click)="onModelUpdate(user)" data-bs-toggle="modal"
+                data-bs-target="#exampleModal"><i class='bx bxs-edit' data-bs-toggle="tooltip" data-bs-placement="top"
+                  title="Edit User Role, Email, UserName"></i></button> </span>
             <!-- <span><button type="button" class="btn btn-warning"  (click)="updateRoleData(user)" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class='bx bx-edit' ></i></button></span> -->
           </div>
 
@@ -106,7 +107,32 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" (click)="submitUpdate()">Update</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal"
+          data-bs-target="#exampleModal1" (click)="submitUpdate()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel1">Status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="!modalLoading">
+        {{modalMessage}}
+      </div>
+      <div class="modal-body loader" *ngIf="modalLoading">
+        <span>
+
+          <mat-spinner class="mod" role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+          </mat-spinner>
+        </span>
+      </div>
+      <div class="modal-footer" *ngIf="!modalLoading">
+        <button type="button" data-bs-dismiss="modal" class="btn btn-primary">OK</button>
       </div>
     </div>
   </div>

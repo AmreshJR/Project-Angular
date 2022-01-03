@@ -89,3 +89,12 @@ button:disabled {
 /* .pass-grp{
       margin-top: 2% !important;
   } */
+
+.loader {
+  align-items: center !important;
+  justify-self: center !important;
+  text-align: center !important;
+}
+mat-spinner {
+  margin-left: 40%;
+}

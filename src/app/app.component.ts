@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 import { UserService } from './user.service';
@@ -9,10 +9,10 @@ import { UserService } from './user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Project';
   isAdmin!: boolean;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   isLogged!:boolean;
   public ImageUrl: string = '../assets/78-785827_user-profile-avatar-login-account-male-user-icon.png';
 
@@ -23,8 +23,9 @@ export class AppComponent {
     public router: ActivatedRoute,
   ) {}
   ngOnInit(): void {
-    this.isLogged = this.service.isLogged();
-    if(this.isLogged == true)
+    this.service.isLog.subscribe(logged=>{
+      this.isLogged = logged;
+      if(logged)
     {
       this.isAdmin = this.service.UserObject().isAdmin;
       this.service.getUserProfile().subscribe(
@@ -43,7 +44,8 @@ export class AppComponent {
         }
       );
     }
-   
+    });
+    this.service.checkStatus();
   }
 
   isValidRoute() {

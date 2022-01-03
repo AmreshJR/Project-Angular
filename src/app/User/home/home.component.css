@@ -1,66 +1,70 @@
-.child{
-    width: 200px;
-    padding-left: 10px;
+.child {
+  width: 200px;
+  padding-left: 10px;
 }
-.flex-container{
-    display: flex;
-    margin-top: 10px;
+.flex-container {
+  display: flex;
+  margin-top: 10px;
 }
-.arrow{
-    color: white;
-    background-color: black;
-    margin-top: 8px;
+.arrow {
+  color: white;
+  background-color: black;
+  margin-top: 8px;
 }
-.arrow:hover{
-    color: black;
-    background-color: white;
-    cursor: pointer;
+.arrow:hover {
+  color: black;
+  background-color: white;
+  cursor: pointer;
 }
 
 .mr-0 {
-    margin-right: 5px;
-    margin-top: 10px;
-  }
-  .ml-auto {
-    margin-left: auto;
-  }
-  .d-block {
-    display: block;
-  }
-  .remove-filter{
-      color:red !important ; 
-      padding-right:15px !important;
-  }
-  .filter{
-     color: black !important;
-  }
-  .filter:hover{
-      color: aqua;
-  }
-  h4{
-      padding-right: 5px;
-  }
-  .filter-btn{
-      padding-top: 20px;
-  }
-  .button-container{
-      display: flex;
-      margin-top: 20px;
-      justify-content: space-between;
-  }
-  .button-child{
-      padding: 10px;
-  }
-  .activate{
-      background-color: red;
-      border-color: red;
-  }
-  .team-btn{
-      width: fit-content;
-  }
-  .dt {
-    width: 300px !important;
-  }
-  .dm {
-    width: 100px;
-  }
+  margin-right: 5px;
+  margin-top: 10px;
+}
+.ml-auto {
+  margin-left: auto;
+}
+.d-block {
+  display: block;
+}
+.remove-filter {
+  color: red !important ;
+  padding-right: 15px !important;
+}
+.filter {
+  color: black !important;
+}
+.filter:hover {
+  color: aqua;
+}
+h4 {
+  padding-right: 5px;
+}
+.filter-btn {
+  padding-top: 20px;
+}
+.button-container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+.button-child {
+  padding: 10px;
+}
+.activate {
+  background-color: red;
+  border-color: red;
+}
+.team-btn {
+  width: fit-content;
+}
+.dt {
+  width: 300px !important;
+}
+.dm {
+  width: 100px;
+}
+
+.cross:hover {
+  color: black;
+}

@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication.service';
 import { confirmPassword } from '../../Common';
 import { DtoSignUp } from './DtoSignUp';
+var $: any;
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-registration',
@@ -12,13 +14,13 @@ import { DtoSignUp } from './DtoSignUp';
 })
 export class RegistrationComponent implements OnInit {
   SignUpForm: FormGroup = new FormGroup({});
+  public isLoading: boolean = false;
   // Password: FormGroup = new FormGroup({});
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService
   ) {}
-
   public barLabel: string = 'Password strength:';
   public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
   public thresholds = [90, 75, 45, 25];
@@ -31,6 +33,7 @@ export class RegistrationComponent implements OnInit {
   ];
   public modelMessage: string | undefined;
   ngOnInit(): void {
+    if (this.authService.isLogged() == true) this.router.navigate(['/home']);
     this.SignUpForm = this.fb.group({
       UserName: [
         '',
@@ -133,19 +136,21 @@ export class RegistrationComponent implements OnInit {
       dob: this.SignUpForm.value.DOB,
       address: this.SignUpForm.value.Address,
     };
-    console.log(newUser);
+    this.isLoading = true;
     this.authService.addNewUser(newUser).subscribe((data) => {
-      console.log(data);
-      if (data.status == true) {
+      if (data.statusCode == 200)
         this.modelMessage = 'Account Created Successfully';
-      } else this.modelMessage = 'Failed to Create Account';
+      else if (data.statusCode == 204)
+        this.modelMessage = 'Failed to Create Account';
+      else if (data.statusCode == 208) this.modelMessage = 'Already Created';
+      else this.modelMessage = 'Internal server error. Try Again';
+
+      this.isLoading = false;
     });
   }
-  onFocusOut(event: any) {
-    console.log(event.target.value);
-  }
+  onFocusOut(event: any) {}
   redirect() {
-    this.router.navigate(['/Login']);
+    this.router.navigate(['/login']);
   }
   reload() {
     let currentUrl = this.router.url;

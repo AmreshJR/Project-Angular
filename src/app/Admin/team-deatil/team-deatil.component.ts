@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DtoTeam } from 'Dto/DtoTeam';
 import { AdminService } from 'src/app/admin-service.service';
+import { AuthenticationService } from 'src/app/authentication.service';
 
 @Component({
   selector: 'app-team-deatil',
@@ -16,14 +17,25 @@ export class TeamDeatilComponent implements OnInit {
   public edit: boolean = false;
   public show!: boolean;
   public current: string = 'Select Lead';
+  public modalMessage!: string;
+  public isLoading: boolean = false;
   public TeamUpdateForm: FormGroup = new FormGroup({});
-  constructor(private service: AdminService, private fb: FormBuilder) {}
+  constructor(
+    private service: AdminService,
+    private authService: AuthenticationService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     var roleData = { role: 'TeamLead' };
-    this.service.getTeamLead(roleData).subscribe((data) => {
-      this.teamLeads = data;
-    });
+    this.service.getTeamLead(roleData).subscribe(
+      (data) => {
+        this.teamLeads = data;
+      },
+      (err) => {
+        if (err.status == 401) this.authService.LogOut();
+      }
+    );
     this.createForm();
   }
   createForm() {
@@ -45,9 +57,9 @@ export class TeamDeatilComponent implements OnInit {
   showDetail() {
     this.show = true;
     var team = { leadName: this.current };
-    this.service
-      .getTeam(team)
-      .subscribe((data) => console.log((this.team = data)));
+    this.service.getTeam(team).subscribe((data) => {
+      this.team = data;
+    });
   }
   displayEdit() {
     this.edit = true;
@@ -59,9 +71,14 @@ export class TeamDeatilComponent implements OnInit {
       statusId: this.TeamUpdateForm.value.statusId,
       teamTypeId: +this.TeamUpdateForm.value.teamTypeId,
     };
-    console.log(teamData);
+    this.isLoading = true;
     this.service.assignUserToTeam(teamData).subscribe((data) => {
-      console.log(data);
+      if (data.statusCode == 200)
+        this.modalMessage = 'User Added Successfully.';
+      else if (data.statusCode == 208)
+        this.modalMessage = 'User Already Added.';
+      else this.modalMessage = 'Error Occered, Try again.';
+      this.isLoading = false;
     });
   }
 }

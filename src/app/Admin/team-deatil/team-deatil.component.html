@@ -80,7 +80,30 @@
             </div>
             <div class="card-body item">
                 <button type="button" [disabled]="!TeamUpdateForm.valid" class="btn btn-primary"
-                    (click)=" sendTeamData()">Update</button>
+                    (click)=" sendTeamData()" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
             </div>
         </form>
+    </div>
+    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" *ngIf="!isLoading">
+                    {{modalMessage}}
+                </div>
+                <div class="modal-body loader" *ngIf="isLoading">
+                    <span>
+
+                        <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+                        </mat-spinner>
+                    </span>
+                </div>
+                <div class="modal-footer" *ngIf="!isLoading">
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
     </div>

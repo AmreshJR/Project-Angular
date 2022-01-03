@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
   public enc!: string;
   public dc!: string;
   ngOnInit(): void {
-    if (this.authService.isLogged() == true) 
-    this.router.navigate(['/home']);
+    if (this.authService.isLogged() == true) this.router.navigate(['/home']);
     this.LoginForm = this.fb.group({
       Email: [
         '',
@@ -60,25 +59,21 @@ export class LoginComponent implements OnInit {
       email: this.LoginForm.value.Email,
       password: this.LoginForm.value.Password,
     };
+    this.isLoading = true;
     this.authService.logIn(user).subscribe(
       (data) => {
-        if(data.status == 200)
-        {
-          this.isLoading = true;
+        if (data.status == 200) {
           const token: string = data.result.token;
           const tokenExp = data.result.tokenExp;
-          console.log(data);
           localStorage.setItem('jwt', token);
           localStorage.setItem('tokeExpiration', tokenExp);
           this.authService.saveUser(token);
           this.router.navigate(['/home']);
           this.status = false;
           this.isLoading = false;
-        }
-        else{
+        } else {
           this.status = true;
         }
-       
       },
       (err) => {
         this.status = true;
