@@ -38,7 +38,20 @@
             <button type="button" class="btn btn-success" (click)="signUpRedirect()">Signup</button>
 
         </div>
-        <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf=status>
+      
+    </form>
+</div>
+<div class="wrapper" *ngIf="isLoading">
+    <div class="inner">
+        <mat-spinner role="progressbar" mode="indeterminate" color="warn" mode="indeterminate">
+        </mat-spinner>
+    </div>
+</div>
+
+
+
+
+  <!-- <div class="alert alert-danger d-flex align-items-center" role="alert" *ngIf=status>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                 class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img"
                 aria-label="Warning:">
@@ -48,14 +61,4 @@
             <div>
                 Invalid Email or Password.
             </div>
-        </div>
-
-    </form>
-</div>
-<div class="wrapper" *ngIf="isLoading">
-    <div class="inner">
-        <h4>Lodaing...</h4>
-        <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
-        </mat-spinner>
-    </div>
-</div>
+        </div> -->

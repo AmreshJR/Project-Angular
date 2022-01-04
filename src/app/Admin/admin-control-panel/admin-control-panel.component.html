@@ -1,7 +1,7 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">AC</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -9,17 +9,34 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/home">Home</a>
+            <a class="nav-link " routerLink="/home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/admin">Admin Control Panel</a>
+            <a class="nav-link " aria-current="page" routerLink="/admin">Admin Control Panel</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/admin/teamdetails">Team Detail</a>
           </li>
         </ul>
-        <div class="dropdown dropstart profile">
-          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <img [src]="ImageUrl" class="profile-image" alt="profile" width="40" height="40">
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item  routerLink="/home">
+            <i class='bx bxs-home' ></i>
+            <span>Home</span>
+          </button>
+          <button mat-menu-item  routerLink="/home/profile">
+            <i class='bx bxs-user-account'></i>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()" >
+            <i class='bx bx-exit'></i>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+        <!-- <div class="dropdown dropstart profile">
+          <button class="btn dropdown-toggle btn-nav" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
             aria-expanded="false">
             <img [src]="ImageUrl" class="profile-image" alt="profile" width="30" height="30">
 
@@ -32,7 +49,7 @@
             <li><a class="dropdown-item"><button class="btn btn-outline-success" (click)="logout()"
                   type="submit">Logout</button></a></li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </nav>
@@ -40,7 +57,7 @@
 <router-outlet></router-outlet>
 <div class="table-responsive " *ngIf="!isLoading && route.children.length === 0">
   <table class="table table-hover">
-    <thead class="table-dark">
+    <thead class="table table-success">
       <tr>
         <th scope="col">UserId</th>
         <th scope="col">UserName</th>
@@ -107,14 +124,13 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal"
-          data-bs-target="#exampleModal1" (click)="submitUpdate()">Update</button>
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="submitUpdate()">Update</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+<!-- <div class="modal fade " id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -124,10 +140,10 @@
       <div class="modal-body" *ngIf="!modalLoading">
         {{modalMessage}}
       </div>
-      <div class="modal-body loader" *ngIf="modalLoading">
+      <div class="modal-body bd" *ngIf="modalLoading">
         <span>
 
-          <mat-spinner class="mod" role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+          <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
           </mat-spinner>
         </span>
       </div>
@@ -136,4 +152,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

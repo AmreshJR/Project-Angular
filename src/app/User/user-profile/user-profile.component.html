@@ -6,14 +6,15 @@
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                     <span class="wrap">
                         <img class="image--cover" width="150px" [src]="imageUrl">
-                        <i class='bx bx-edit' (click)="hide = !hide"></i>
+                        <i class='bx bx-edit' data-bs-toggle="modal"
+                        data-bs-target="#exampleModal2" ></i>
                     </span>
-                    <div [hidden]="hide" class="input-group">
+                    <!-- <div [hidden]="hide" class="input-group">
                         <input type="file" class="form-control" (change)="profileUpdate($event)" accept="image/*"
                             id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                         <button class="btn btn-outline-secondary" (click)="uploadImage()" type="button"
                             id="inputGroupFileAddon04">Upload</button>
-                    </div>
+                    </div> -->
                     <span class="font-weight-bold"> {{userProfile.userName}}</span>
                     <span class="text-black-50">{{userProfile.email}}</span>
                     <span> </span>
@@ -169,16 +170,47 @@
             <div class="modal-body" *ngIf="!responseLoading">
                 {{modalMessage}}
             </div>
-            <div class="modal-body loader" *ngIf="responseLoading">
+            <div class="modal-body bd" *ngIf="responseLoading">
                 <span>
 
-                    <mat-spinner class="mod" role="progressbar" mode="indeterminate" color="primary"
+                    <mat-spinner  role="progressbar" mode="indeterminate" color="primary"
                         mode="indeterminate">
                     </mat-spinner>
                 </span>
             </div>
             <div class="modal-footer" *ngIf="!responseLoading">
                 <button type="button" data-bs-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mode -->
+<div class="modal fade " id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModal2Label">Profile Upload</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body bd" >
+                <img class="image--cover modal-image" width="150px" [src]="modalUrl">
+                <div class="input-group">
+                    <input type="file" #file name="file" class="form-control" (change)="profileUpdate($event)" accept="image/*"
+                        id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                </div>
+                <mat-progress-bar mode="determinate" [value]="progressBar"></mat-progress-bar>
+
+                <small class="success" *ngIf="imageSuccess" >{{imageMessage}} </small>
+                <small class="text-danger" *ngIf="imageFailed" >{{imageMessage}} </small>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" (click)="uploadImage()" type="button"
+                    id="inputGroupFileAddon04">Upload</button>
+                <button type="button" (click)="refresh()"  data-bs-dismiss="modal" class="btn btn-primary">Exit</button>
             </div>
         </div>
     </div>

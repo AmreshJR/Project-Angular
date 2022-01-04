@@ -38,6 +38,20 @@ span {
   object-position: center right;
 }
 
-.mod {
-  margin-left: 40%;
+.btn-nav{
+  border: none;
+}
+
+.bd{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.threedot{
+  color: white;
+}
+.navbar-brand{
+  font-size: x-large;
 }

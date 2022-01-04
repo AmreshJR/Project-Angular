@@ -28,3 +28,10 @@ footer {
 .inner {
   padding: 12px;
 }
+.bx {
+  font-size: x-large;
+  padding-right: 10px;
+}
+.navbar-brand{
+  font-size: x-large;
+}

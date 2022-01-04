@@ -12,6 +12,9 @@ import { AuthGuard } from './auth.guard';
 import { AuthenticationService } from './authentication.service';
 import { TokenIntercepterService } from './token-intercepter.service';
 import { UserAuthGuard } from './user-auth.guard';
+import { ToastrModule } from 'ngx-toastr';
+import { UserService } from './user.service';
+import { NotificationService } from 'src/Helper/notification.service';
 
 
 
@@ -28,9 +31,10 @@ import { UserAuthGuard } from './user-auth.guard';
     HttpClientModule,
     BrowserAnimationsModule,
     Ng9PasswordStrengthBarModule,
-    MaterialExampleModule
+    MaterialExampleModule,
+    ToastrModule.forRoot()
   ],
-  providers: [AuthGuard,UserAuthGuard,AuthenticationService,
+  providers: [AuthGuard,UserAuthGuard,AuthenticationService,UserService,NotificationService,
     {
       provide:HTTP_INTERCEPTORS,
       useClass: TokenIntercepterService,

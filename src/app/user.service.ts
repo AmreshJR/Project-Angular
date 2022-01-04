@@ -21,7 +21,7 @@ export class UserService {
       { headers: headers, responseType: 'json' }
     );
   }
-  uploadUserProfileImage(data: any) {
+  uploadUserProfileImage(data: any):Observable<any> {
     const headers = new HttpHeaders().set(
       'Content-Type',
       'application/json; charset=utf-8'
@@ -29,7 +29,8 @@ export class UserService {
 
     return this.http.post<any>(
       `${environment.BaseURL}api/User/UploadImage`,
-      data
+      data,
+      {reportProgress: true, observe: 'events'}
     );
   }
   UpdateUserProfileData(data: DtoUpdateProfileData) {

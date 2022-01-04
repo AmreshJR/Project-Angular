@@ -75,9 +75,7 @@ body {
 .wrap {
   padding: 5px;
 }
-.mod {
-  margin-left: 40%;
-}
+
 
 .image--cover {
   width: 170px;
@@ -86,4 +84,19 @@ body {
   margin: 20px;
   object-fit: cover;
   object-position: center right;
+}
+
+.success{
+  color: greenyellow;
+}
+.bd{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+mat-progress-bar{
+  border-bottom-left-radius: 80px 80px;
+  border-bottom-right-radius: 80px 80px;
 }

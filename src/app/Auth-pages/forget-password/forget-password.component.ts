@@ -51,7 +51,7 @@ export class ForgetPasswordComponent implements OnInit {
         this.showSuccess = true;
         this.showError = false;
       } else if (data.statusCode == 204) {
-        this.errorMessage = 'The Email Id Does Not exist, Use Different Email.';
+        this.errorMessage = 'The Email Id Does Not exist Or Invalid, Use Different Email.';
         this.showError = true;
         this.showSuccess = false;
       } else {

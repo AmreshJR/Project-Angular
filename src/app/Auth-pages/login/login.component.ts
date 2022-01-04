@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthenticationService } from 'src/app/authentication.service';
+import { NotificationService } from 'src/Helper/notification.service';
 import { DtoLogIn } from './DtoLogIn';
 
 @Component({
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private jwtHelper: JwtHelperService,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notify:NotificationService
   ) {}
   public enc!: string;
   public dc!: string;
@@ -72,10 +74,14 @@ export class LoginComponent implements OnInit {
           this.status = false;
           this.isLoading = false;
         } else {
+          this.isLoading=false;
+          this.notify.showError("Invalid Password OR Email","Authentication Failed");
           this.status = true;
         }
       },
       (err) => {
+        this.isLoading=false;
+        this.notify.showError("Invalid Password OR Email","Authentication Failed");
         this.status = true;
       }
     );

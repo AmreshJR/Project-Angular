@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DtoTeam } from 'Dto/DtoTeam';
 import { AdminService } from 'src/app/admin-service.service';
 import { AuthenticationService } from 'src/app/authentication.service';
+import { NotificationService } from 'src/Helper/notification.service';
 
 @Component({
   selector: 'app-team-deatil',
@@ -17,13 +18,12 @@ export class TeamDeatilComponent implements OnInit {
   public edit: boolean = false;
   public show!: boolean;
   public current: string = 'Select Lead';
-  public modalMessage!: string;
-  public isLoading: boolean = false;
   public TeamUpdateForm: FormGroup = new FormGroup({});
   constructor(
     private service: AdminService,
     private authService: AuthenticationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notify: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -71,14 +71,12 @@ export class TeamDeatilComponent implements OnInit {
       statusId: this.TeamUpdateForm.value.statusId,
       teamTypeId: +this.TeamUpdateForm.value.teamTypeId,
     };
-    this.isLoading = true;
     this.service.assignUserToTeam(teamData).subscribe((data) => {
       if (data.statusCode == 200)
-        this.modalMessage = 'User Added Successfully.';
+        this.notify.showSuccess('User Added Successfully', 'Status');
       else if (data.statusCode == 208)
-        this.modalMessage = 'User Already Added.';
-      else this.modalMessage = 'Error Occered, Try again.';
-      this.isLoading = false;
+        this.notify.showWarning('User Already Added', 'Status');
+      else this.notify.showError('Error Occered, Try again', 'Status');
     });
   }
 }

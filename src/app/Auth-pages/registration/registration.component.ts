@@ -2,11 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/authentication.service';
+import { NotificationService } from 'src/Helper/notification.service';
 import { confirmPassword } from '../../Common';
 import { DtoSignUp } from './DtoSignUp';
-var $: any;
-import * as bootstrap from 'bootstrap';
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -19,7 +17,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notify:NotificationService
   ) {}
   public barLabel: string = 'Password strength:';
   public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
@@ -31,7 +30,6 @@ export class RegistrationComponent implements OnInit {
     '(Strong)',
     '(Great!)',
   ];
-  public modelMessage: string | undefined;
   ngOnInit(): void {
     if (this.authService.isLogged() == true) this.router.navigate(['/home']);
     this.SignUpForm = this.fb.group({
@@ -139,13 +137,27 @@ export class RegistrationComponent implements OnInit {
     this.isLoading = true;
     this.authService.addNewUser(newUser).subscribe((data) => {
       if (data.statusCode == 200)
-        this.modelMessage = 'Account Created Successfully';
-      else if (data.statusCode == 204)
-        this.modelMessage = 'Failed to Create Account';
-      else if (data.statusCode == 208) this.modelMessage = 'Already Created';
-      else this.modelMessage = 'Internal server error. Try Again';
+      {  
+        this.isLoading = false;
+        this.notify.showSuccess("Account Created Successfully","Status")
 
+      }
+      else if (data.statusCode == 204)
+      {
       this.isLoading = false;
+      this.notify.showError("Failed to Create Account","Status")
+
+      }
+      else if (data.statusCode == 208) 
+      {
+        this.isLoading = false;
+        this.notify.showWarning("Already Created","Stataus")
+      }
+      else
+      {
+      this.isLoading = false;
+      this.notify.showError("Internal server error. Try Again","Server Error")
+      } 
     });
   }
   onFocusOut(event: any) {}

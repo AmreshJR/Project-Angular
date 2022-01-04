@@ -1,5 +1,5 @@
 <div class="container-fluid mb-5">
-    <form [formGroup]="SignUpForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="SignUpForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
         <div>
             <h1 class="head">Create Account</h1>
         </div>
@@ -99,12 +99,20 @@
         </div>
         <div class="submit">
             <button type="submit" [disabled]="!SignUpForm.valid" class="btn btn-primary " data-bs-toggle="modal"
-                data-bs-target="#exampleModal"> Create Account</button>
+                data-bs-target="#exampleModal" (click)="reload()"> Create Account</button>
         </div>
     </form>
 </div>
+
+<div class="wrapper" *ngIf="isLoading">
+    <div class="inner">
+      <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
+      </mat-spinner>
+    </div>
+  </div>
+
 <!-- Mode -->
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -115,7 +123,7 @@
             <div class="modal-body" *ngIf="!isLoading">
                 {{modelMessage}}
             </div>
-            <div class="modal-body loader" *ngIf="isLoading">
+            <div class="modal-body bd" *ngIf="isLoading">
                 <span>
 
                     <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
@@ -127,4 +135,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

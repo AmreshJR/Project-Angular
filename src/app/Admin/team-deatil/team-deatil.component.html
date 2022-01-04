@@ -80,11 +80,11 @@
             </div>
             <div class="card-body item">
                 <button type="button" [disabled]="!TeamUpdateForm.valid" class="btn btn-primary"
-                    (click)=" sendTeamData()" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
+                    (click)=" sendTeamData()">Update</button>
             </div>
         </form>
     </div>
-    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,9 +94,8 @@
                 <div class="modal-body" *ngIf="!isLoading">
                     {{modalMessage}}
                 </div>
-                <div class="modal-body loader" *ngIf="isLoading">
+                <div class="modal-body bd" *ngIf="isLoading">
                     <span>
-
                         <mat-spinner role="progressbar" mode="indeterminate" color="primary" mode="indeterminate">
                         </mat-spinner>
                     </span>
@@ -106,4 +105,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->

@@ -6,6 +6,7 @@ import { AllUserDto } from 'Dto/AllUserDto';
 import { DtoPage } from 'Dto/DtoPage';
 import { DtoUpdateRole } from 'Dto/DtoupdateRole';
 import { AuthenticationService } from 'src/app/authentication.service';
+import { NotificationService } from 'src/Helper/notification.service';
 
 import { AdminService } from '../../admin-service.service';
 
@@ -22,13 +23,13 @@ export class AdminControlPanelComponent implements OnInit {
   public pageSize: number = 5;
   public ImageUrl: string = '';
   public EditdetailForm: FormGroup = new FormGroup({});
-  public modalMessage!: string;
-  public modalLoading: boolean = true;
+  public page!:DtoPage;
   constructor(
     private service: AdminService,
     private fb: FormBuilder,
     public route: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private notify:NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -36,19 +37,11 @@ export class AdminControlPanelComponent implements OnInit {
       this.Roles = data;
     });
     this.service.getLength().subscribe((data) => (this.length = +data));
-    var page: DtoPage = {
+    this.page = {
       page: 0,
       noOfData: this.pageSize,
     };
-    this.service.getAllUser(page).subscribe(
-      (data) => {
-        this.isLoading = false;
-        this.Users = data;
-      },
-      (err) => {
-        if (err.status == 401) this.authService.LogOut();
-      }
-    );
+    this.getAllUser();
     this.authService.getUserProfile().subscribe(
       (data) => {
         this.isLoading = true;
@@ -67,6 +60,17 @@ export class AdminControlPanelComponent implements OnInit {
     );
     this.createForm();
   }
+  getAllUser(){
+    this.service.getAllUser(this.page).subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.Users = data;
+      },
+      (err) => {
+        if (err.status == 401) this.authService.LogOut();
+      }
+    );
+  }
   onModelUpdate(userData: any) {
     this.EditdetailForm.controls['userName'].setValue(userData.userName);
     this.EditdetailForm.controls['newRole'].setValue(userData.role);
@@ -84,21 +88,26 @@ export class AdminControlPanelComponent implements OnInit {
     });
   }
   submitUpdate() {
-    this.modalLoading = true;
     this.service.updateUserData(this.EditdetailForm.value).subscribe((data) => {
-      if (data.statusCode == 200) this.modalMessage = 'User Updated';
-      else this.modalMessage = 'Error Occured, Try again';
+      if (data.statusCode == 200) 
+      {
+        this.notify.showSuccess("User Updated","Update Status")
+        this.getAllUser();
+      }
 
-      this.modalLoading = false;
+      else 
+        this.notify.showError("Error Occured, Try again","Update Status")
+      
+
     });
   }
 
   onPageChange(event: PageEvent) {
-    var page: DtoPage = {
+    this.page = {
       page: event.pageIndex,
       noOfData: event.pageSize,
     };
-    this.service.getAllUser(page).subscribe((data) => {
+    this.service.getAllUser(this.page).subscribe((data) => {
       this.Users = data;
     });
   }
